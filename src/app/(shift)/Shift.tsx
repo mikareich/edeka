@@ -35,7 +35,7 @@ export default function Shift({
 
   return (
     <div className="border rounded-lg px-4 py-2 shadow hover:shadow-md transition-all">
-      <div className="flex items-baseline justify-between">
+      <div className="flex items-baseline justify-between flex-col sm:flex-row">
         <h2 className="text-xl font-bold">
           💸 {type} (~{estimatedRevenue.toFixed(2)}€)
         </h2>
