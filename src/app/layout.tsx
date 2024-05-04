@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-import { GeistSans } from "geist/font/sans";
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Edeka Dienstplan",
+  description: "Mika's Edeka Dienstplan",
+};
 
 export default function RootLayout({
   children,
@@ -8,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={GeistSans.className}>{children}</body>
+    <html lang="de">
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
