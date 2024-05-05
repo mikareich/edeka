@@ -40,17 +40,19 @@ export const FORMAT_DATE = (
   const deltaTime = date.getTime() - Date.now();
   const rtf = new Intl.RelativeTimeFormat("de-DE");
 
+  console.log(deltaTime / ONE_DAY_IN_MS);
+
   if (Math.abs(deltaTime) > ONE_DAY_IN_MS) {
-    const inDays = Math.floor(deltaTime / ONE_DAY_IN_MS);
+    const inDays = Math.round(deltaTime / ONE_DAY_IN_MS);
     return rtf.format(inDays, "days");
   }
 
   if (Math.abs(deltaTime) > ONE_HOUR_IN_MS) {
-    const inHours = Math.floor(deltaTime / ONE_HOUR_IN_MS);
+    const inHours = Math.round(deltaTime / ONE_HOUR_IN_MS);
     return rtf.format(inHours, "hours");
   }
 
-  const inMinutes = Math.ceil(deltaTime / ONE_MINUTE_IN_MS);
+  const inMinutes = Math.round(deltaTime / ONE_MINUTE_IN_MS);
   return rtf.format(inMinutes, "minutes");
 };
 
