@@ -1,4 +1,9 @@
-import { GET_NEXT_WEEK, GET_TODAY, FORMAT_DATE } from "@/lib/utils";
+import {
+  GET_NEXT_WEEK,
+  GET_TODAY,
+  FORMAT_DATE,
+  GET_REVENUE,
+} from "@/lib/utils";
 import getPlan from "./_actions/getPlan";
 import Shift from "./_components/Shift";
 import Settings from "./_components/Settings";
@@ -16,8 +21,6 @@ export default async function Home({
   const startDate = new Date(searchParams.from || GET_TODAY().getTime());
   const endDate = new Date(searchParams.to || GET_NEXT_WEEK().getTime());
 
-  console.log(startDate, endDate);
-
   const plan = await getPlan(
     process.env.PEP_USERNAME!,
     process.env.PEP_PASSWORD!,
@@ -25,7 +28,7 @@ export default async function Home({
     endDate,
   );
 
-  console.log(searchParams);
+  const revenue = plan.reduce((acc, shift) => acc + GET_REVENUE(shift), 0);
 
   return (
     <div className="container pt-10 max-w-prose px-4">
@@ -34,7 +37,7 @@ export default async function Home({
           Dein Edeka Dienstplan
         </h1>
 
-        <Settings />
+        <Settings revenue={revenue} />
         <hr />
       </header>
 

@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    @apply bg-gray-50;
-}
-
 input[type="date"] {
-    width: 105px;
-
-    @apply border rounded px-1;
-
-    &::-webkit-calendar-picker-indicator {
-        display: none;
-    }
+    @apply appearance-none text-gray-900 bg-gray-100 px-1 rounded;
 }

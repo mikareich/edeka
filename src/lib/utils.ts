@@ -13,7 +13,6 @@ export const GET_NEXT_WEEK = () =>
 export type Shift = {
   id: string;
   type: string;
-  location: string;
   startDate: Date;
   endDate: Date;
   numberOfBreaks: number;
@@ -21,10 +20,10 @@ export type Shift = {
 
 export const FORMAT_DATE = (
   date: Date,
-  format: "short" | "long" | "relativ" | "input" = "short",
+  format: "short" | "week" | "relativ" | "input" = "short",
 ) => {
   if (format === "input")
-    return new Date(date.getTime() + ONE_DAY_IN_MS).toISOString().split("T")[0];
+    return new Date(date.getTime()).toISOString().split("T")[0];
 
   if (format === "short") {
     return date.toLocaleDateString("de-DE", {
@@ -32,12 +31,9 @@ export const FORMAT_DATE = (
     });
   }
 
-  if (format === "long") {
+  if (format === "week") {
     return date.toLocaleDateString("de-DE", {
       weekday: "long",
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
     });
   }
 
@@ -64,9 +60,17 @@ export const FORMAT_TIME = (date: Date) =>
     hour: "2-digit",
   });
 
-export const GET_REVENUE = (startDate: Date, endDate: Date) =>
+export const GET_REVENUE = ({ startDate, endDate, numberOfBreaks }: Shift) =>
   Math.round(
-    ((endDate.getTime() - startDate.getTime()) / ONE_HOUR_IN_MS) *
+    // delta time
+    ((endDate.getTime() -
+      startDate.getTime() -
+      // minus breaks
+      numberOfBreaks * 15 * ONE_MINUTE_IN_MS) /
+      // in hours
+      ONE_HOUR_IN_MS) *
+      // times minimum vage per hour
       MINIMUM_VAGE_PER_HOUR *
+      // round to 2 decimal places
       100,
   ) / 100;

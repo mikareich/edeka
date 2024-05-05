@@ -11,7 +11,7 @@ export default async function getPlan(
   due: Date,
 ) {
   const AbortTimeout = {
-    signal: AbortSignal.timeout(1000),
+    signal: AbortSignal.timeout(5000),
     store: "no-store",
   };
 
@@ -29,14 +29,9 @@ export default async function getPlan(
 
   const { access_token: token } = await tokenResponse.json();
 
-  // transform time span
-  const toDateFormat = (date: Date) => date.toISOString().split("T")[0];
-  const formattedFrom = FORMAT_DATE(from, "input");
-  const formattedDue = FORMAT_DATE(due, "input");
-
   // fetch shifts
   const shiftsResponse = await fetch(
-    `${PEP_API_URL}/EmployeeView/Plan?from=${formattedFrom}&to=${formattedDue}`,
+    `${PEP_API_URL}/EmployeeView/Plan?from=${FORMAT_DATE(from, "input")}&to=${FORMAT_DATE(due, "input")}`,
     {
       headers: {
         Host: "haupenthal1674-pepapp.pepbalance.de",
@@ -53,8 +48,6 @@ export default async function getPlan(
     .map((shift: any) => ({
       id: shift.activities[0].id,
       type: shift.activities[0].planningActivity.planningArea.name,
-      location:
-        shift.activities[0].planningActivity.planningArea.shop.name.trim(),
       startDate: new Date(shift.activities[0].from),
       endDate: new Date(shift.activities[0].to),
       numberOfBreaks: shift.activities[0].breaks.length,
