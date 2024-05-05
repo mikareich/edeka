@@ -30,8 +30,7 @@ export default function Settings() {
   }, [startDate, endDate, router]);
 
   return (
-    <section className="flex gap-2">
-      <span className="text-gray-500">
+    <section className="text-gray-500">
         Vom{" "}
         <input
           type="date"
@@ -44,11 +43,6 @@ export default function Settings() {
           value={endDate}
           onChange={(e) => setEndDate(new Date(e.target.value))}
         />
-      </span>
-
-      <button className="underline ml-auto text-gray-900">
-        Dienstplan neu laden
-      </button>
     </section>
   );
 }
