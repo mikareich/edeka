@@ -40,8 +40,6 @@ export const FORMAT_DATE = (
   const deltaTime = date.getTime() - Date.now();
   const rtf = new Intl.RelativeTimeFormat("de-DE");
 
-  console.log(deltaTime / ONE_DAY_IN_MS);
-
   if (Math.abs(deltaTime) > ONE_DAY_IN_MS) {
     const inDays = Math.round(deltaTime / ONE_DAY_IN_MS);
     return rtf.format(inDays, "days");

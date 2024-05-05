@@ -11,8 +11,8 @@ export default async function getPlan(
   due: Date,
 ) {
   const AbortTimeout = {
-    signal: AbortSignal.timeout(5000),
     store: "no-store",
+    signal: AbortSignal.timeout(5000),
   };
 
   // get auth token
