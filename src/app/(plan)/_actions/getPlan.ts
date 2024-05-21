@@ -22,12 +22,12 @@ export default async function getPlan(
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams(
-      `username=${username}&password=${password}&grant_type=password&client_id=pepapp`,
+      `username=${username}&password=${password}&grant_type=password&client_id=pepapp&scope=openid offline_access&resource=https://haupenthal1674-pepapp.pepbalance.de`,
     ),
     ...AbortTimeout,
   });
 
-  const { access_token: token } = await tokenResponse.json();
+  const { access_token: token, ...body } = await tokenResponse.json();
 
   // fetch shifts
   const shiftsResponse = await fetch(

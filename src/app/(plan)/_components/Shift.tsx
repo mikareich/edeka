@@ -1,8 +1,5 @@
 import { FORMAT_DATE, FORMAT_TIME, GET_REVENUE, type Shift } from "@/lib/utils";
-
-const Highlighted = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-gray-900 font-medium">{children}</span>
-);
+import Highlighted from "./Highlighted";
 
 export default function Shift(shift: Shift) {
   const { id, type, startDate, endDate } = shift;
