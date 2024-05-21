@@ -11,7 +11,6 @@ export default async function getPlan(
   due: Date,
 ) {
   const AbortTimeout = {
-    store: "no-store",
     signal: AbortSignal.timeout(5000),
   };
 
@@ -27,7 +26,7 @@ export default async function getPlan(
     ...AbortTimeout,
   });
 
-  const { access_token: token, ...body } = await tokenResponse.json();
+  const { access_token: token } = await tokenResponse.json();
 
   // fetch shifts
   const shiftsResponse = await fetch(
