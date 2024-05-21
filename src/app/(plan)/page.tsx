@@ -28,7 +28,9 @@ export default async function Home({
     endDate,
   );
 
-  const revenue = plan.reduce((acc, shift) => acc + GET_REVENUE(shift), 0);
+  const revenue = Math.round(
+    plan.reduce((acc, shift) => acc + GET_REVENUE(shift), 0),
+  );
 
   return (
     <div className="container pt-10 max-w-prose px-4">
