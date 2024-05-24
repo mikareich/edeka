@@ -1,6 +1,6 @@
 "use server";
 
-import { FORMAT_DATE, GET_REVENUE, ShiftEvent } from "@/lib/utils";
+import { FORMAT_DATE, GET_REVENUE, Shift } from "@/lib/utils";
 
 const { PEP_API_URL } = process.env;
 
@@ -57,11 +57,11 @@ export default async function getPlan(
         location: "Saarstraße 92, 54290 Trier",
         revenue,
         numberOfBreaks,
-      } satisfies ShiftEvent;
+      } satisfies Shift;
     })
     .filter(
-      (shift: ShiftEvent) => shift.start.getTime() >= startPlan.getTime(),
-    ) as ShiftEvent[];
+      (shift: Shift) => shift.start.getTime() >= startPlan.getTime(),
+    ) as Shift[];
 
   return plan;
 }

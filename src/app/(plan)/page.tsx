@@ -1,8 +1,7 @@
-import { GET_DATE_BY_DAYS, GET_TODAY, GET_REVENUE } from "@/lib/utils";
+import { GET_DATE_BY_DAYS, GET_TODAY } from "@/lib/utils";
 import getPlan from "@/lib/getPlan";
-import Shift from "./_components/Shift";
 import Settings from "./_components/Settings";
-import getCalendar from "@/lib/calendar";
+import Shift from "./_components/Shift";
 
 type SearchParams = {
   from?: string;

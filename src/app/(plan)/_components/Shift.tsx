@@ -1,18 +1,7 @@
-import {
-  FORMAT_DATE,
-  FORMAT_TIME,
-  GET_REVENUE,
-  type ShiftEvent,
-} from "@/lib/utils";
+import { FORMAT_DATE, FORMAT_TIME, type Shift } from "@/lib/utils";
 import Highlighted from "./Highlighted";
 
-export default function Shift({
-  id,
-  summary,
-  start,
-  end,
-  revenue,
-}: ShiftEvent) {
+export default function Shift({ id, summary, start, end, revenue }: Shift) {
   return (
     <div
       key={id}

@@ -1,7 +1,6 @@
 const ONE_MINUTE_IN_MS = 1000 * 60;
 const ONE_HOUR_IN_MS = ONE_MINUTE_IN_MS * 60;
 const ONE_DAY_IN_MS = ONE_HOUR_IN_MS * 24;
-const ONE_WEEK_IN_MS = ONE_DAY_IN_MS * 7;
 
 const MINIMUM_VAGE_PER_HOUR = 12.41;
 
@@ -10,7 +9,7 @@ export const GET_TODAY = () => new Date();
 export const GET_DATE_BY_DAYS = (daysDiff = 7) =>
   new Date(GET_TODAY().getTime() + daysDiff * ONE_DAY_IN_MS);
 
-export type ShiftEvent = {
+export type Shift = {
   id: string;
   summary: string;
   description: string;

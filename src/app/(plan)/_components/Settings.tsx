@@ -1,7 +1,7 @@
 "use client";
 
 import { FORMAT_DATE, GET_DATE_BY_DAYS, GET_TODAY } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import Highlighted from "./Highlighted";
 
@@ -10,8 +10,10 @@ type SettingsProps = {
 };
 
 export default function Settings({ revenue }: SettingsProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const { initalEndDate, initalStartDate } = useMemo(() => {
-    const searchParams = new URLSearchParams(window.location.search);
     const from = searchParams.get("from");
     const to = searchParams.get("to");
 
@@ -43,8 +45,6 @@ export default function Settings({ revenue }: SettingsProps) {
         setEndDate(date);
       }
     };
-
-  const router = useRouter();
 
   useEffect(() => {
     router.push(
