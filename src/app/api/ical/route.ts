@@ -1,6 +1,15 @@
 import getPlan from "@/lib/getPlan";
-import { GET_DATE_BY_DAYS, ONE_DAY_IN_MS, ONE_HOUR_IN_MS } from "@/lib/utils";
-import ical, { ICalEventData, ICalAlarmType } from "ical-generator";
+import {
+  GET_DATE_BY_DAYS,
+  ONE_DAY_IN_MS,
+  ONE_HOUR_IN_MS,
+  Shift,
+} from "@/lib/utils";
+import ical, {
+  ICalEventData,
+  ICalAlarmType,
+  ICalCalendar,
+} from "ical-generator";
 
 const eventProps = {
   timezone: "Europe/Berlin",
@@ -15,6 +24,14 @@ const eventProps = {
     },
   ],
 } satisfies Partial<ICalEventData>;
+
+const eventGenerator = (calendar: ICalCalendar) => (shift: Shift) =>
+  calendar.createEvent({
+    ...shift,
+    ...eventProps,
+    start: new Date(shift.start.getTime() - ONE_HOUR_IN_MS), // weird fix because google doenst respect my timezones :(
+    end: new Date(shift.end.getTime() - ONE_HOUR_IN_MS), // weird fix because google doenst respect my timezones :(
+  });
 
 export const GET = async () => {
   const calendar = ical({
@@ -34,7 +51,7 @@ export const GET = async () => {
     endDate,
   );
 
-  shifts.forEach((shift) => calendar.createEvent({ ...shift, ...eventProps }));
+  shifts.forEach(eventGenerator(calendar));
 
   return new Response(calendar.toString());
 };
