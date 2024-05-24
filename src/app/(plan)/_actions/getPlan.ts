@@ -10,10 +10,6 @@ export default async function getPlan(
   from: Date,
   due: Date,
 ) {
-  const AbortTimeout = {
-    signal: AbortSignal.timeout(5000),
-  };
-
   // get auth token
   const tokenResponse = await fetch(`${PEP_API_URL}/Core/Authorization/token`, {
     method: "POST",
@@ -23,7 +19,7 @@ export default async function getPlan(
     body: new URLSearchParams(
       `username=${username}&password=${password}&grant_type=password&client_id=pepapp&scope=openid offline_access&resource=https://haupenthal1674-pepapp.pepbalance.de`,
     ),
-    ...AbortTimeout,
+    next: { revalidate: 3600 },
   });
 
   const { access_token: token } = await tokenResponse.json();
@@ -33,10 +29,9 @@ export default async function getPlan(
     `${PEP_API_URL}/EmployeeView/Plan?from=${FORMAT_DATE(from, "input")}&to=${FORMAT_DATE(due, "input")}`,
     {
       headers: {
-        Host: "haupenthal1674-pepapp.pepbalance.de",
         Authorization: `Bearer ${token}`,
       },
-      ...AbortTimeout,
+      cache: "no-store",
     },
   );
 
