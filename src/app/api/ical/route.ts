@@ -25,9 +25,5 @@ export const GET = async () => {
     calendar.createEvent(shift);
   });
 
-  return new Response(calendar.toString(), {
-    headers: {
-      "Content-Type": "text/calendar",
-    },
-  });
+  return new Response(calendar.toString());
 };
