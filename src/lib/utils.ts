@@ -7,14 +7,17 @@ const MINIMUM_VAGE_PER_HOUR = 12.41;
 
 export const GET_TODAY = () => new Date();
 
-export const GET_NEXT_WEEK = () =>
-  new Date(GET_TODAY().getTime() + ONE_WEEK_IN_MS);
+export const GET_DATE_BY_DAYS = (daysDiff = 7) =>
+  new Date(GET_TODAY().getTime() + daysDiff * ONE_DAY_IN_MS);
 
-export type Shift = {
+export type ShiftEvent = {
   id: string;
-  type: string;
-  startDate: Date;
-  endDate: Date;
+  summary: string;
+  description: string;
+  end: Date;
+  start: Date;
+  location: "Saarstraße 92, 54290 Trier";
+  revenue: number;
   numberOfBreaks: number;
 };
 
@@ -60,17 +63,26 @@ export const FORMAT_TIME = (date: Date) =>
     hour: "2-digit",
   });
 
-export const GET_REVENUE = ({ startDate, endDate, numberOfBreaks }: Shift) =>
-  Math.round(
-    // delta time
-    ((endDate.getTime() -
-      startDate.getTime() -
-      // minus breaks
-      numberOfBreaks * 15 * ONE_MINUTE_IN_MS) /
-      // in hours
-      ONE_HOUR_IN_MS) *
-      // times minimum vage per hour
-      MINIMUM_VAGE_PER_HOUR *
-      // round to 2 decimal places
-      100,
-  ) / 100;
+type RevenueProps = {
+  start: Date;
+  end: Date;
+  numberOfBreaks: number;
+};
+
+export const GET_REVENUE = ({ start, end, numberOfBreaks }: RevenueProps) => {
+  return (
+    Math.round(
+      // delta time
+      ((end.getTime() -
+        start.getTime() -
+        // minus breaks
+        numberOfBreaks * 15 * ONE_MINUTE_IN_MS) /
+        // in hours
+        ONE_HOUR_IN_MS) *
+        // times minimum vage per hour
+        MINIMUM_VAGE_PER_HOUR *
+        // round to 2 decimal places
+        100,
+    ) / 100
+  );
+};

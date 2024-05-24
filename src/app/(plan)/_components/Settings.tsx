@@ -1,6 +1,6 @@
 "use client";
 
-import { FORMAT_DATE, GET_NEXT_WEEK, GET_TODAY } from "@/lib/utils";
+import { FORMAT_DATE, GET_DATE_BY_DAYS, GET_TODAY } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import Highlighted from "./Highlighted";
@@ -16,7 +16,7 @@ export default function Settings({ revenue }: SettingsProps) {
     const to = searchParams.get("to");
 
     const initalStartDate = new Date(from || GET_TODAY());
-    const initalEndDate = new Date(to || GET_NEXT_WEEK());
+    const initalEndDate = new Date(to || GET_DATE_BY_DAYS());
 
     return {
       initalStartDate,
