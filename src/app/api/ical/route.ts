@@ -1,6 +1,20 @@
 import getPlan from "@/lib/getPlan";
-import { GET_DATE_BY_DAYS } from "@/lib/utils";
-import ical from "ical-generator";
+import { GET_DATE_BY_DAYS, ONE_DAY_IN_MS, ONE_HOUR_IN_MS } from "@/lib/utils";
+import ical, { ICalEventData, ICalAlarmType } from "ical-generator";
+
+const eventProps = {
+  timezone: "Europe/Berlin",
+  alarms: [
+    {
+      type: ICalAlarmType.display,
+      trigger: ONE_HOUR_IN_MS / 1000,
+    },
+    {
+      type: ICalAlarmType.display,
+      trigger: ONE_DAY_IN_MS / 1000,
+    },
+  ],
+} satisfies Partial<ICalEventData>;
 
 export const GET = async () => {
   const calendar = ical({
@@ -20,9 +34,7 @@ export const GET = async () => {
     endDate,
   );
 
-  shifts.forEach((shift) => {
-    calendar.createEvent({ ...shift, timezone: "Europe/Berlin" });
-  });
+  shifts.forEach((shift) => calendar.createEvent({ ...shift, ...eventProps }));
 
   return new Response(calendar.toString());
 };
