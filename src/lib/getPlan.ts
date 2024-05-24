@@ -46,7 +46,7 @@ export default async function getPlan(
 
       const revenue = GET_REVENUE({ start, end, numberOfBreaks });
 
-      const description = `⏸️ Anzahl Pausen: ${numberOfBreaks} \n💸 ~${revenue}€`;
+      const description = `⏸️ Anzahl Pausen: ${numberOfBreaks || "keine :("} \n💸 ~${revenue}€`;
 
       return {
         id: shift.activities[0].id,

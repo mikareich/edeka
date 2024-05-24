@@ -8,7 +8,6 @@ export const GET = async () => {
     timezone: "Europe/Berlin",
     prodId: { company: "Edeka Dienstplan", product: "Dienstplan" },
     description: "Dein Edeka Dienstplan",
-    scale: "GREGORIAN",
   });
 
   const startDate = new Date("01.01.2024");
@@ -22,7 +21,7 @@ export const GET = async () => {
   );
 
   shifts.forEach((shift) => {
-    calendar.createEvent(shift);
+    calendar.createEvent({ ...shift, timezone: "Europe/Berlin" });
   });
 
   return new Response(calendar.toString());
