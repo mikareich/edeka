@@ -29,8 +29,6 @@ const eventGenerator = (calendar: ICalCalendar) => (shift: Shift) =>
   calendar.createEvent({
     ...shift,
     ...eventProps,
-    start: new Date(shift.start.getTime() - ONE_HOUR_IN_MS), // weird fix because google doenst respect my timezones :(
-    end: new Date(shift.end.getTime() - ONE_HOUR_IN_MS), // weird fix because google doenst respect my timezones :(
   });
 
 export const GET = async () => {
